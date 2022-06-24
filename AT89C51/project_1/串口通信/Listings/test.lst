@@ -1,0 +1,107 @@
+C51 COMPILER V9.54   TEST                                                                  05/14/2022 17:11:49 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE TEST
+OBJECT MODULE PLACED IN .\Objects\test.obj
+COMPILER INVOKED BY: D:\keil 5\C51\BIN\C51.EXE test.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\test.
+                    -lst) TABS(2) OBJECT(.\Objects\test.obj)
+
+line level    source
+
+   1          #include<reg51.h>
+   2          #include<intrins.h>
+   3          code unsigned char tab[]={0xc0,0xf9,0xa4,0xb0,0x99,0x92,0x82,0xf8,0x80,0x90};
+   4          unsigned char buffer[]={0x00,0x00,0x00,0x00,0x00,0x00};
+   5          void disp(void);
+   6          unsigned char index=0,flag=0;
+   7          
+   8          void Uart_SendString(unsigned char *Buffer)
+   9          {
+  10   1        unsigned char j=0;
+  11   1        while (Buffer[j]!=0x00)
+  12   1        {
+  13   2          SBUF=Buffer[j];
+  14   2          while(!TI);
+  15   2          TI=0;
+  16   2          j++;
+  17   2        }
+  18   1      }
+  19          
+  20          void disp()
+  21          {
+  22   1          //unsigned char w,i,j;
+  23   1          unsigned char w,i;
+  24   1          unsigned int j;
+  25   1        
+  26   1          w=0xfe;       //??????0xfe
+  27   1          for(i=0;i<6;i++)
+  28   1            {
+  29   2              P1=0xff;                   //???,??????0xff??
+  30   2              P2=w;                 //???????P2?
+  31   2              w=_crol_(w,1);    //???????,?????LED
+  32   2              P1=tab[buffer[i]-'0']; // ??????????
+  33   2              //P1=tab[buffer[i]];//Error
+  34   2              for(j=0;j<600;j++);// ????
+  35   2             }
+  36   1      }
+  37          
+  38          void main()
+  39          {
+  40   1        unsigned char i=0;
+  41   1        unsigned int j;
+  42   1        TMOD=0x20;
+  43   1        EA=1;
+  44   1        ES=1;
+  45   1        
+  46   1        TL1=0xfd;
+  47   1        TH1=0xfd;
+  48   1        
+  49   1        SCON=0x40;
+  50   1        REN=1;
+  51   1        TR1=1;
+  52   1        
+  53   1        while(1)
+  54   1        {
+C51 COMPILER V9.54   TEST                                                                  05/14/2022 17:11:49 PAGE 2   
+
+  55   2          if(flag==1)
+  56   2          {
+  57   3            disp();
+  58   3          }
+  59   2        }
+  60   1      }
+*** WARNING C280 IN LINE 41 OF test.c: 'j': unreferenced local variable
+  61          
+  62          void uart_receive(void) interrupt 4
+  63          {
+  64   1        unsigned char dat;
+  65   1        if(RI==1)
+  66   1        {
+  67   2          RI=0;
+  68   2          dat=SBUF;
+  69   2          buffer[index]=dat;
+  70   2          if(index>=6)
+  71   2          {
+  72   3            flag=1;
+  73   3            index=0;
+  74   3          }
+  75   2        }
+  76   1      }
+  77          
+  78          
+  79          
+  80          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    164    ----
+   CONSTANT SIZE    =     10    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      8       6
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  1 WARNING(S),  0 ERROR(S)

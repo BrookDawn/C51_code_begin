@@ -1,0 +1,4 @@
+".\Objects\STARTUP.obj",
+".\Objects\flashLCD.obj" 
+TO ".\Objects\project_1" 
+PRINT(".\Listings\project_1.m51")

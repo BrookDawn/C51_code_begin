@@ -1,0 +1,88 @@
+C51 COMPILER V9.54   MAIN                                                                  05/18/2022 21:42:30 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: D:\keil 5\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\main.
+                    -lst) TABS(2) OBJECT(.\Objects\main.obj)
+
+line level    source
+
+   1          #include <REGX51.H>
+   2          #include <string.h>
+   3          #include "Keyborad.h"
+*** WARNING C318 IN LINE 3 OF main.c: can't open file 'Keyborad.h'
+   4          
+   5          unsigned char code Code[]="1234AB";
+   6          unsigned char Str[7];
+   7          
+   8          void delay(unsigned int i)
+   9          {
+  10   1        unsigned char j;
+  11   1        while(i--)
+  12   1        {
+  13   2          for(j=0;j<114;j++)
+  14   2          {}
+  15   2        }
+  16   1      }
+  17          
+  18          void main()
+  19          {
+  20   1        unsigned char p=0;
+  21   1        unsigned char led[]={0xc0,0xf9,0xa4,0xb0,0x99,0x92,0x82,0xf8,0x80,0x90,0x88,0x83,0xc6,0xa1,0x86,0x8e};
+  22   1        unsigned char led1[]={0xbf,0x8c,0x86};
+  23   1        unsigned char i,k;
+  24   1        
+  25   1        Str[6]='\0';
+  26   1        P2=led1[0];
+  27   1        P0=0xff;
+  28   1        while(1)
+  29   1        {
+  30   2          i=scan_key();
+*** WARNING C206 IN LINE 30 OF main.c: 'scan_key': missing function-prototype
+  31   2          if(i==-1)continue;
+  32   2          else
+  33   2          {
+  34   3            switch(p)
+  35   3            {
+  36   4            case 0:Str[0]=i;p++;P2=led[i-'0'];delay(1000);break;
+  37   4            case 1:Str[1]=i;p++;P2=led[i-'0'];delay(1000);break;
+  38   4            case 2:Str[2]=i;p++;P2=led[i-'0'];delay(1000);break;
+  39   4            case 3:Str[3]=i;p++;P2=led[i-'0'];delay(1000);break;
+  40   4            case 4:Str[4]=i;p++;P2=led[i-'0'];delay(1000);break;
+  41   4            case 5:Str[5]=i;p++;P2=led[i-'0'];delay(1000);
+  42   4            k=strcmp(Str,Code);
+  43   4            if(k==0)
+  44   4            {
+  45   5              P2=led1[1];
+  46   5              delay(500);
+  47   5              P2=led1[0];
+  48   5            }
+  49   4            else 
+  50   4            {
+  51   5              P2=led1[2];
+  52   5              delay(1000);
+C51 COMPILER V9.54   MAIN                                                                  05/18/2022 21:42:30 PAGE 2   
+
+  53   5              P2=led1[0];
+  54   5            }
+  55   4            p=0;
+  56   4            break;
+  57   4          }
+  58   3         }
+  59   2        }
+  60   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    195    ----
+   CONSTANT SIZE    =     26    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      7      20
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  2 WARNING(S),  0 ERROR(S)

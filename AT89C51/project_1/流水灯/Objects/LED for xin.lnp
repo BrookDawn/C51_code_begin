@@ -1,0 +1,4 @@
+".\Objects\STARTUP.obj",
+".\Objects\LED for xin.obj" 
+TO ".\Objects\LED for xin" 
+PRINT(".\Listings\LED for xin.m51")

@@ -1,0 +1,110 @@
+C51 COMPILER V9.54   MAIN                                                                  06/04/2022 12:03:49 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: D:\keil 5\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\main.
+                    -lst) TABS(2) OBJECT(.\Objects\main.obj)
+
+line level    source
+
+   1          #include<reg51.h>
+   2          
+   3          unsigned char count=0;
+   4          unsigned char sec=45,min=59,hour=23;
+   5          void timer_1() interrupt 3 
+   6          {
+   7   1        TH1=(65536-50000)/256;
+   8   1        TL1=(65536-50000)%256;
+   9   1        count++;
+  10   1        if(count==20)
+  11   1       {
+  12   2      count=0;
+  13   2      sec++;
+  14   2      
+  15   2        if(sec==60)
+  16   2       {
+  17   3        min++;
+  18   3        sec=0;
+  19   3        if(min==60)
+  20   3         {
+  21   4        hour++;
+  22   4        min=0;
+  23   4         }
+  24   3      if(hour==24)
+  25   3           {
+  26   4             hour=0;
+  27   4           }
+  28   3          }
+  29   2        }
+  30   1      }
+  31          void disp(unsigned char sec,unsigned min,unsigned hour)
+  32          {
+  33   1         unsigned char j;
+  34   1         unsigned char led[]={0xc0,0xf9,0xa4,0xb0,0x99,0x92,0x82,0xf8,0x80,0x90};
+  35   1         P1=0xff;
+  36   1         P3=0xff;
+  37   1         P2=0xef;
+  38   1         P1=led[sec/10];
+  39   1         for(j=0;j<100;j++);
+  40   1       
+  41   1         P1=0xff;
+  42   1         P3=0xff;
+  43   1         P2=0xdf;
+  44   1         P1=led[sec%10];
+  45   1         for(j=0;j<100;j++);
+  46   1      
+  47   1         P1=0xff;
+  48   1         P3=0xff;
+  49   1         P2=0xfe;
+  50   1         P1=led[hour/10];
+  51   1         for(j=0;j<100;j++);
+  52   1      
+  53   1         P1=0xff;
+  54   1         P3=0xff;
+C51 COMPILER V9.54   MAIN                                                                  06/04/2022 12:03:49 PAGE 2   
+
+  55   1         P2=0xfd;
+  56   1         P1=led[hour%10];
+  57   1         for(j=0;j<100;j++);
+  58   1      
+  59   1         P1=0xff;
+  60   1         P3=0xff;
+  61   1         P2=0xfb;
+  62   1         P1=led[min/10];
+  63   1         for(j=0;j<100;j++);
+  64   1      
+  65   1         P1=0xff;
+  66   1         P3=0xff;
+  67   1         P2=0xf7;
+  68   1         P1=led[min%10];
+  69   1         for(j=0;j<100;j++);
+  70   1        }
+  71          void main()
+  72          {
+  73   1         TMOD=0x10;
+  74   1         TH1=(65536-50000)/256;
+  75   1         TL1=(65536-50000)%256;
+  76   1         ET1=1;
+  77   1         EA=1;
+  78   1         TR1=1;
+  79   1       while(1)
+  80   1        {
+  81   2      
+  82   2        disp(sec,min,hour);
+  83   2        }
+  84   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    305    ----
+   CONSTANT SIZE    =     10    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      4      15
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
